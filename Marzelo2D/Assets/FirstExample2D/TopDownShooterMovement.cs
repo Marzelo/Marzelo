@@ -14,6 +14,8 @@ public class TopDownShooterMovement : MonoBehaviour {
 
     public SpriteRenderer spriteRenderer;
 
+    public Transform sightDirection;
+
     class Axis {
         public string name;
         public KeyCode negative;
@@ -35,31 +37,54 @@ public class TopDownShooterMovement : MonoBehaviour {
         axisList.Add (new Axis ("Vertical", KeyCode.S, KeyCode.W));
         axisList.Add (new Axis ("Arrow_H", KeyCode.LeftArrow, KeyCode.RightArrow));
 	}
-	
-	// Update is called once per frame
-	void Update () {
 
-        transform.Translate (Vector3.right * GetAxis ("Horizontal") * speed * Time.deltaTime, Space.World);
-        transform.Translate (Vector3.up * GetAxis ("Vertical") * speed * Time.deltaTime, Space.World);
-        transform.Rotate (Vector3.back * GetAxis ("Arrow_H") * angularVelocity * Time.deltaTime);
+    // Update is called once per frame
+    void Update() {
 
-        if (Input.GetKeyDown (KeyCode.E)) {
-            MoveColor ();
+        transform.Translate(Vector3.right * GetAxis("Horizontal") * speed * Time.deltaTime, Space.World);
+        transform.Translate(Vector3.up * GetAxis("Vertical") * speed * Time.deltaTime, Space.World);
+        //sightDirection.Rotate (Vector3.back * GetAxis ("Arrow_H") * angularVelocity * Time.deltaTime);
+
+        Vector3 mouseWorlPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorlPos.z = transform.position.z;
+        Debug.DrawLine(transform.position, mouseWorlPos, Color.red);
+        transform.up = (mouseWorlPos - transform.position).normalized;
+
+        float scollWhellValue = Input.GetAxis("Mouse ScrollWheel");
+
+        if (scollWhellValue != 0){
+            MoveColor (scollWhellValue);
+
         }
-
-        if (Input.GetKeyDown (KeyCode.Space)) {
+        
+        if (Input.GetMouseButtonDown (0)) {
             Shoot ();
         }
-	}
+    }
 
     void Shoot () {
-        SpriteRenderer tempRenderer = Instantiate (bullet, transform.Find ("Cannon").position, transform.rotation).GetComponent<SpriteRenderer>();
+        SpriteRenderer tempRenderer = Instantiate (bullet, sightDirection.Find("Cannon").position, sightDirection.rotation).GetComponent<SpriteRenderer>();
         tempRenderer.color = spriteRenderer.color;
         Destroy (tempRenderer.gameObject, 2);
     }
 
-    void MoveColor () {
-        colorIndex = (colorIndex >= colors.Count - 1) ? 0 : colorIndex + 1;
+    void MoveColor (float moveValue) {
+        moveValue *= 10;
+        for (int i = 0; i < Mathf.Abs(moveValue); i++){
+            colorIndex += 1 * (int) Mathf.Sign(moveValue);
+            if (colorIndex >= colors.Count) {
+                colorIndex = 0;
+            }else if (colorIndex < 0){
+                colorIndex = colors.Count - 1;
+            }
+        }
+
+        /*if (tempValue >= colors.Count- 1) { 
+            colorIndex = 0;
+        }else if(tempValue < 0){
+            colorIndex = colors.Count - 1;
+        }*/
+        //colorIndex = (colorIndex >= colors.Count - 1) ? 0 : colorIndex + 1;
         spriteRenderer.color = colors[colorIndex];
     }
 
