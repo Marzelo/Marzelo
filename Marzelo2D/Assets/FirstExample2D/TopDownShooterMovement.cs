@@ -11,10 +11,15 @@ public class TopDownShooterMovement : MonoBehaviour {
 
     public List<Color> colors = new List<Color> ();
     int colorIndex = 0;
+    public int ColorIndex { get { return colorIndex; } }
 
     public SpriteRenderer spriteRenderer;
 
     public Transform sightDirection;
+    public Transform sightObject;
+
+    public LineRenderer sigthLine;
+
 
     class Axis {
         public string name;
@@ -32,6 +37,7 @@ public class TopDownShooterMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        Cursor.visible = false;
         spriteRenderer.color = colors[colorIndex];
         axisList.Add (new Axis ("Horizontal", KeyCode.A, KeyCode.D));
         axisList.Add (new Axis ("Vertical", KeyCode.S, KeyCode.W));
@@ -50,13 +56,16 @@ public class TopDownShooterMovement : MonoBehaviour {
         Debug.DrawLine(transform.position, mouseWorlPos, Color.red);
         transform.up = (mouseWorlPos - transform.position).normalized;
 
+        sightDirection.up = (mouseWorlPos - transform.position).normalized;
+        sightObject.position = (Vector3.Distance(mouseWorlPos, transform.position) >= 1) ? mouseWorlPos : transform.position + sightDirection.up;
+        //sigthLine.SetPositions(new Vector3[] { transform.position, transform.position + sightDirection.up * 3 });
+
         float scollWhellValue = Input.GetAxis("Mouse ScrollWheel");
 
         if (scollWhellValue != 0){
             MoveColor (scollWhellValue);
 
         }
-        
         if (Input.GetMouseButtonDown (0)) {
             Shoot ();
         }
