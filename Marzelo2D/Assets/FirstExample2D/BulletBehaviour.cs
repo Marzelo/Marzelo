@@ -10,7 +10,6 @@ public class BulletBehaviour : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         spriteRenderer = GetComponent<SpriteRenderer> ();
-		
 	}
 	
 	// Update is called once per frame
@@ -20,10 +19,10 @@ public class BulletBehaviour : MonoBehaviour {
 
     void OnTriggerEnter2D (Collider2D other) {
         SpriteRenderer otherRenderer = other.GetComponent<SpriteRenderer>();
-        if (otherRenderer != null && other.CompareTag("Block")) { 
+        if (otherRenderer != null && other.CompareTag ("Block")) {
             int targetAmmount = (otherRenderer.color == spriteRenderer.color) ? 5 : 2;
-            other.GetComponent<BlockEntity>().DecreaseLife(targetAmmount);
-            Destroy(gameObject);
+            other.GetComponent<BlockEntity> ().DecreaseLife (targetAmmount);
+            Destroy (gameObject);
         }
     }
 }
