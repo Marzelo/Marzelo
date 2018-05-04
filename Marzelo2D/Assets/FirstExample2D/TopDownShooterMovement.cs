@@ -11,18 +11,8 @@ public class TopDownShooterMovement : MonoBehaviour {
 
     public List<Color> colors = new List<Color> ();
     int colorIndex = 0;
-    public int ColorIndex { get { return colorIndex; } }
 
     public SpriteRenderer spriteRenderer;
-    public Transform sightDirection;
-    public Transform sightObject;
-
-<<<<<<< HEAD
-    public LineRenderer sightLine;
-=======
-    public LineRenderer sigthLine;
-
->>>>>>> 292d39d740c6fc8355d6ad985181d1f18928f394
 
     class Axis {
         public string name;
@@ -40,7 +30,6 @@ public class TopDownShooterMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Cursor.visible = false;
         spriteRenderer.color = colors[colorIndex];
         axisList.Add (new Axis ("Horizontal", KeyCode.A, KeyCode.D));
         axisList.Add (new Axis ("Vertical", KeyCode.S, KeyCode.W));
@@ -52,59 +41,25 @@ public class TopDownShooterMovement : MonoBehaviour {
 
         transform.Translate (Vector3.right * GetAxis ("Horizontal") * speed * Time.deltaTime, Space.World);
         transform.Translate (Vector3.up * GetAxis ("Vertical") * speed * Time.deltaTime, Space.World);
-        //sightDirection.Rotate (Vector3.back * GetAxis ("Arrow_H") * angularVelocity * Time.deltaTime);
+        transform.Rotate (Vector3.back * GetAxis ("Arrow_H") * angularVelocity * Time.deltaTime);
 
-<<<<<<< HEAD
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-        mouseWorldPos.z = transform.position.z;
-        Debug.DrawLine (transform.position, mouseWorldPos, Color.red);
-        
-        sightDirection.up = (mouseWorldPos - transform.position).normalized;
-        sightObject.position = (Vector3.Distance (mouseWorldPos, transform.position) >= 1) ? mouseWorldPos : transform.position + sightDirection.up;
-        sightLine.SetPositions (new Vector3[] { transform.position, transform.position + sightDirection.up * 3 });
-=======
-        Vector3 mouseWorlPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorlPos.z = transform.position.z;
-        Debug.DrawLine(transform.position, mouseWorlPos, Color.red);
-        transform.up = (mouseWorlPos - transform.position).normalized;
-
-        sightDirection.up = (mouseWorlPos - transform.position).normalized;
-        sightObject.position = (Vector3.Distance(mouseWorlPos, transform.position) >= 1) ? mouseWorlPos : transform.position + sightDirection.up;
-        //sigthLine.SetPositions(new Vector3[] { transform.position, transform.position + sightDirection.up * 3 });
-
-        float scollWhellValue = Input.GetAxis("Mouse ScrollWheel");
->>>>>>> 292d39d740c6fc8355d6ad985181d1f18928f394
-
-        float scrollWheelValue = Input.GetAxis ("Mouse ScrollWheel");
-
-        if (scrollWheelValue != 0) {
-            MoveColor (scrollWheelValue);
+        if (Input.GetKeyDown (KeyCode.E)) {
+            MoveColor ();
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> 292d39d740c6fc8355d6ad985181d1f18928f394
-        if (Input.GetMouseButtonDown (0)) {
+        if (Input.GetKeyDown (KeyCode.Space)) {
             Shoot ();
         }
 	}
 
     void Shoot () {
-        SpriteRenderer tempRenderer = Instantiate (bullet, sightDirection.Find ("Cannon").position, sightDirection.rotation).GetComponent<SpriteRenderer> ();
+        SpriteRenderer tempRenderer = Instantiate (bullet, transform.Find ("Cannon").position, transform.rotation).GetComponent<SpriteRenderer>();
         tempRenderer.color = spriteRenderer.color;
         Destroy (tempRenderer.gameObject, 2);
     }
 
-    void MoveColor (float moveValue) {
-        moveValue *= 10;
-        for (int i = 0; i < Mathf.Abs(moveValue); i++) {
-            colorIndex += 1 * (int) Mathf.Sign (moveValue);
-            if (colorIndex >= colors.Count) {
-                colorIndex = 0;
-            } else if (colorIndex < 0) {
-                colorIndex = colors.Count - 1;
-            }
-        }
+    void MoveColor () {
+        colorIndex = (colorIndex >= colors.Count - 1) ? 0 : colorIndex + 1;
         spriteRenderer.color = colors[colorIndex];
     }
 
