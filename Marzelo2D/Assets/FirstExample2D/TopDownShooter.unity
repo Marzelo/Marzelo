@@ -877,7 +877,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 25, y: 25}
+  m_AnchoredPosition: {x: 25.32, y: 25.37}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1242028925
@@ -1003,6 +1003,7 @@ GameObject:
   - component: {fileID: 1299614701}
   - component: {fileID: 1299614700}
   - component: {fileID: 1299614699}
+  - component: {fileID: 1299614703}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1073,6 +1074,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1299614703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1299614698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9f5e41803c296e46a618fc024cd0077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObject: {fileID: 1828935879}
+  targetColor: {r: 1, g: 0, b: 0.76551723, a: 0}
+  distance: 2
+  maxDistanceDelta: 10
+  speed: 0
+  impulseDirection: {x: 0, y: 0, z: 0}
 --- !u!1 &1382529504
 GameObject:
   m_ObjectHideFlags: 0
@@ -1415,6 +1433,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifePoints: 20
+--- !u!4 &1828935879 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4084498644956880, guid: dc89dccc3cd10534cb4ed8f1b3329b86,
+    type: 2}
+  m_PrefabInternal: {fileID: 1913081070}
 --- !u!1 &1839429820
 GameObject:
   m_ObjectHideFlags: 0
@@ -1484,6 +1507,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114806368647856836, guid: dc89dccc3cd10534cb4ed8f1b3329b86,
+        type: 2}
+      propertyPath: colors.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4084498644956880, guid: dc89dccc3cd10534cb4ed8f1b3329b86, type: 2}
       propertyPath: m_LocalPosition.x
       value: -3.89
@@ -1515,6 +1543,40 @@ Prefab:
     - target: {fileID: 4084498644956880, guid: dc89dccc3cd10534cb4ed8f1b3329b86, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1117601616930876, guid: dc89dccc3cd10534cb4ed8f1b3329b86, type: 2}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 212699072550281766, guid: dc89dccc3cd10534cb4ed8f1b3329b86,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212792854655815598, guid: dc89dccc3cd10534cb4ed8f1b3329b86,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114806368647856836, guid: dc89dccc3cd10534cb4ed8f1b3329b86,
+        type: 2}
+      propertyPath: colors.Array.data[3].g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114806368647856836, guid: dc89dccc3cd10534cb4ed8f1b3329b86,
+        type: 2}
+      propertyPath: colors.Array.data[3].b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114806368647856836, guid: dc89dccc3cd10534cb4ed8f1b3329b86,
+        type: 2}
+      propertyPath: colors.Array.data[3].a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114806368647856836, guid: dc89dccc3cd10534cb4ed8f1b3329b86,
+        type: 2}
+      propertyPath: colors.Array.data[3].r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dc89dccc3cd10534cb4ed8f1b3329b86, type: 2}
