@@ -68,28 +68,17 @@ public class TopDownShooterMovement : MonoBehaviour {
         }
 	}
 
-<<<<<<< HEAD
     void LateUpdate () {
         sightObject.position = (Vector3.Distance (mouseWorldPos, transform.position) >= 1) ? mouseWorldPos : transform.position + sightDirection.up;
-=======
-    void LateUpdate() {
-        sightObject.position = (Vector3.Distance(mouseWorldPos, transform.position) >= 1) ? mouseWorldPos : transform.position + sightDirection.up;
->>>>>>> 7dbafa1db9a351ca92008fb5165c14bfc686cad4
     }
 
     void Shoot () {
         SpriteRenderer tempRenderer = Instantiate (bullet, sightDirection.Find ("Cannon").position, sightDirection.rotation).GetComponent<SpriteRenderer> ();
         tempRenderer.color = spriteRenderer.color;
         Destroy (tempRenderer.gameObject, 2);
-<<<<<<< HEAD
         TopDownCamMovement camera = Camera.main.GetComponent<TopDownCamMovement> ();
         camera.speed = 25;
         camera.impulseDirection = sightDirection.up;
-=======
-        TopDowmCanMovement  camera = Camera.main.GetComponent < TopDowmCanMovement > ();
-        camera.speed = 1;
-
->>>>>>> 7dbafa1db9a351ca92008fb5165c14bfc686cad4
     }
 
     void MoveColor (float moveValue) {
