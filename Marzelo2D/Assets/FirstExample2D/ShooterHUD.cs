@@ -10,7 +10,6 @@ public class ShooterHUD : MonoBehaviour {
     public float spacing;
     Transform collection;
     public GameObject weaponPrefab;
-<<<<<<< HEAD
     int lastColorIndex;
 
 	// Use this for initialization
@@ -35,23 +34,4 @@ public class ShooterHUD : MonoBehaviour {
         }
         lastColorIndex = player.ColorIndex;
     }
-=======
-
-	// Use this for initialization
-	void Start () {
-        debugText =  transform.Find("DeBugText").GetComponent<Text>();
-        collection = transform.Find("WeaponCollection");
-        for(int i = 0; i < player.colors.Count; i++){
-
-        }
-    }
-
-    // Update is called once per frame
-    void Update() {
-        //debugText.text = "Weapon Index: " + player.ColorIndex;
-        Transform targetObject = transform.Find("WeaponCollection").GetChild(0);
-        targetObject.GetComponent<RectTransform>().position =  new Vector3(25,25,0);
-        debugText.text = targetObject.name; //targetObject.GetComponent<RectTransform>().rect.x.ToString();
-	}
->>>>>>> 292d39d740c6fc8355d6ad985181d1f18928f394
 }

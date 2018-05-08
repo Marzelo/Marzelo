@@ -17,12 +17,8 @@ public class TopDownShooterMovement : MonoBehaviour {
     public Transform sightDirection;
     public Transform sightObject;
 
-<<<<<<< HEAD
     public LineRenderer sightLine;
-=======
-    public LineRenderer sigthLine;
-
->>>>>>> 292d39d740c6fc8355d6ad985181d1f18928f394
+    Vector3 mouseWorldPos;
 
     class Axis {
         public string name;
@@ -54,45 +50,35 @@ public class TopDownShooterMovement : MonoBehaviour {
         transform.Translate (Vector3.up * GetAxis ("Vertical") * speed * Time.deltaTime, Space.World);
         //sightDirection.Rotate (Vector3.back * GetAxis ("Arrow_H") * angularVelocity * Time.deltaTime);
 
-<<<<<<< HEAD
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+        mouseWorldPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
         mouseWorldPos.z = transform.position.z;
         Debug.DrawLine (transform.position, mouseWorldPos, Color.red);
         
         sightDirection.up = (mouseWorldPos - transform.position).normalized;
-        sightObject.position = (Vector3.Distance (mouseWorldPos, transform.position) >= 1) ? mouseWorldPos : transform.position + sightDirection.up;
         sightLine.SetPositions (new Vector3[] { transform.position, transform.position + sightDirection.up * 3 });
-=======
-        Vector3 mouseWorlPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorlPos.z = transform.position.z;
-        Debug.DrawLine(transform.position, mouseWorlPos, Color.red);
-        transform.up = (mouseWorlPos - transform.position).normalized;
-
-        sightDirection.up = (mouseWorlPos - transform.position).normalized;
-        sightObject.position = (Vector3.Distance(mouseWorlPos, transform.position) >= 1) ? mouseWorlPos : transform.position + sightDirection.up;
-        //sigthLine.SetPositions(new Vector3[] { transform.position, transform.position + sightDirection.up * 3 });
-
-        float scollWhellValue = Input.GetAxis("Mouse ScrollWheel");
->>>>>>> 292d39d740c6fc8355d6ad985181d1f18928f394
 
         float scrollWheelValue = Input.GetAxis ("Mouse ScrollWheel");
 
         if (scrollWheelValue != 0) {
-            MoveColor (scrollWheelValue);
+            MoveColor (-scrollWheelValue);
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> 292d39d740c6fc8355d6ad985181d1f18928f394
         if (Input.GetMouseButtonDown (0)) {
             Shoot ();
         }
 	}
 
+    void LateUpdate () {
+        sightObject.position = (Vector3.Distance (mouseWorldPos, transform.position) >= 1) ? mouseWorldPos : transform.position + sightDirection.up;
+    }
+
     void Shoot () {
         SpriteRenderer tempRenderer = Instantiate (bullet, sightDirection.Find ("Cannon").position, sightDirection.rotation).GetComponent<SpriteRenderer> ();
         tempRenderer.color = spriteRenderer.color;
         Destroy (tempRenderer.gameObject, 2);
+        TopDownCamMovement camera = Camera.main.GetComponent<TopDownCamMovement> ();
+        camera.speed = 25;
+        camera.impulseDirection = sightDirection.up;
     }
 
     void MoveColor (float moveValue) {
