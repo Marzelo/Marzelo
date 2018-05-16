@@ -42,7 +42,7 @@ public class TopDownShooterMovementRidydbogy : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         Cursor.visible = false;
-        spriteRenderer.color = colors[colorIndex];
+        //spriteRenderer.color = colors[colorIndex];
         axisList.Add (new Axis ("Horizontal", KeyCode.A, KeyCode.D));
         axisList.Add (new Axis ("Vertical", KeyCode.S, KeyCode.W));
         axisList.Add (new Axis ("Arrow_H", KeyCode.LeftArrow, KeyCode.RightArrow));
