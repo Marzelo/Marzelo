@@ -10,29 +10,45 @@ public class ChangeSprite : MonoBehaviour {
     public Sprite spriteLeft;
     public Sprite spriteRight;
 
+    public Animator animator;
+    public RuntimeAnimatorController walkUp;
+    public RuntimeAnimatorController walkDown;
+    public RuntimeAnimatorController walkLeft;
+    public RuntimeAnimatorController walkRight;
+
+    int directionIndex = 0;
+
+
 	// Use this for initialization
 	void Start () {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = spriteUp;
+        animator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
-        if (Input.GetKeyDown(KeyCode.A)) {
-            spriteRenderer.sprite = spriteLeft;
+        if (Input.GetKey(KeyCode.W)) {
+            directionIndex = 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.D)) {
-            spriteRenderer.sprite = spriteRight;
+        if (Input.GetKey(KeyCode.D)) {
+            directionIndex = 1;
         }
 
-        if (Input.GetKeyDown(KeyCode.W)) {
-            spriteRenderer.sprite = spriteUp;
+        if (Input.GetKey(KeyCode.S)) {
+            directionIndex = 2;
         }
 
-        if (Input.GetKeyDown(KeyCode.S)) {
-            spriteRenderer.sprite = spriteDown;
+        if (Input.GetKey(KeyCode.A)) {
+            directionIndex = 3;
+        }
+
+        animator.SetInteger("direction", directionIndex);
+
+        if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0){
+            animator.SetInteger("direction", -1);
         }
 
 	}
