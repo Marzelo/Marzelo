@@ -1,0 +1,16 @@
+﻿<Properties StartupConfiguration="{187E68B9-9B35-F16B-4114-2E8A14571EF7}|">
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/PlatformerTest2D/PlatformerMovement.cs">
+    <Files>
+      <File FileName="Assets/FirstExample2D/Scripts/TopDownShooterMovementWithRigidbody2D.cs" Line="61" Column="39" />
+      <File FileName="Assets/FirstExample2D/Scripts/ShooterHUD.cs" Line="9" Column="1" />
+      <File FileName="Assets/PlatformerTest2D/PlatformerMovement.cs" Line="38" Column="41" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>
