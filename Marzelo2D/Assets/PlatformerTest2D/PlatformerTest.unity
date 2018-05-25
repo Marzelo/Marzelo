@@ -171,6 +171,21 @@ Prefab:
       propertyPath: m_CollisionDetection
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 212695647935064008, guid: e558f6b686dc70941907e6985b99b6a7,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.66594344
+      objectReference: {fileID: 0}
+    - target: {fileID: 212695647935064008, guid: e558f6b686dc70941907e6985b99b6a7,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.2980392
+      objectReference: {fileID: 0}
+    - target: {fileID: 212695647935064008, guid: e558f6b686dc70941907e6985b99b6a7,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e558f6b686dc70941907e6985b99b6a7, type: 2}
   m_IsPrefabParent: 0
@@ -183,11 +198,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4191541138894314, guid: 07fdd4182d82f3b449db6200e56cf7c1, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 2.5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4191541138894314, guid: 07fdd4182d82f3b449db6200e56cf7c1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4191541138894314, guid: 07fdd4182d82f3b449db6200e56cf7c1, type: 2}
       propertyPath: m_LocalPosition.z
