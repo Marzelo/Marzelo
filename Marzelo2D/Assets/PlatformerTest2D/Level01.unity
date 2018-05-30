@@ -651,26 +651,26 @@ Prefab:
         type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: ef75706e7faa2e84e99373ca2f8d39de,
+      objectReference: {fileID: 21300000, guid: a0c5838824be42d4d9ed7226341291c6,
         type: 3}
     - target: {fileID: 212695647935064008, guid: e558f6b686dc70941907e6985b99b6a7,
         type: 2}
       propertyPath: m_Color.g
-      value: 1
+      value: 0.24206921
       objectReference: {fileID: 0}
     - target: {fileID: 212695647935064008, guid: e558f6b686dc70941907e6985b99b6a7,
         type: 2}
       propertyPath: m_Color.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4671392952616286, guid: e558f6b686dc70941907e6985b99b6a7, type: 2}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 70990098908711668, guid: e558f6b686dc70941907e6985b99b6a7,
         type: 2}
       propertyPath: m_Size.y
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 212695647935064008, guid: e558f6b686dc70941907e6985b99b6a7,
         type: 2}
@@ -680,7 +680,12 @@ Prefab:
     - target: {fileID: 212695647935064008, guid: e558f6b686dc70941907e6985b99b6a7,
         type: 2}
       propertyPath: m_SortingOrder
-      value: 2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 212695647935064008, guid: e558f6b686dc70941907e6985b99b6a7,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e558f6b686dc70941907e6985b99b6a7, type: 2}
