@@ -16,17 +16,57 @@ public class PlatformerMovement : MonoBehaviour {
     bool isGrounded;
 
     SpriteRenderer spriteRenderer;
+    Rigidbody2D rigidbody;
+
+    public bool usesRigidbody;
 
 	// Use this for initialization
 	void Start () {
         spriteRenderer = GetComponent<SpriteRenderer> ();
+        rigidbody = GetComponent<Rigidbody2D> ();
+        if(!usesRigidbody) {
+            rigidbody.Sleep();
+        }
 	}
+
+	private void Update(){
+        if (usesRigidbody){
+            RigidBodyUpdate();
+        }else{
+            TransformUpdate();
+        }
+	}
+
+    void RigidBodyUpdate(){
+
+        rigidbody.velocity = new Vector2(0, rigidbody.velocity.y);
+        RaycastHit2D downLeft = Physics2D.Raycast(leftNode, Vector3.down, rayDetectionDistance);
+        RaycastHit2D downRight = Physics2D.Raycast(rightNode, Vector3.down, rayDetectionDistance);
+
+        float horizontalDirection = Input.GetAxis("Horizontal");
+
+        if (!isGrounded){
+            if (!downLeft && !downRight){
+                isGrounded = false;
+            }else if (Input.GetKeyDown(KeyCode.Space)){
+                verticalSpeed = jumpForce;
+                rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                isGrounded = false;
+            }
+        }else{
+            if (downLeft || downRight){
+                isGrounded = true;
+            }
+        }
+
+        rigidbody.velocity = new Vector2(horizontalDirection * horizontalSpeed, rigidbody.velocity.y);
+    }
 	
 	// Update is called once per frame
-	void Update () {
+	void TransformUpdate () {
 
-        RaycastHit2D downLeft = Physics2D.Raycast (leftNode, Vector3.down, 0.1f);
-        RaycastHit2D downRight = Physics2D.Raycast (rightNode, Vector3.down, 0.1f);
+        RaycastHit2D downLeft = Physics2D.Raycast (leftNode, Vector3.down, rayDetectionDistance);
+        RaycastHit2D downRight = Physics2D.Raycast (rightNode, Vector3.down, rayDetectionDistance);
         RaycastHit2D sideLeft = Physics2D.Raycast (leftNode + new Vector3 (0, 0.1f, 0), Vector3.left, 0.1f);
         RaycastHit2D sideRight = Physics2D.Raycast (rightNode + new Vector3 (0, 0.1f, 0), Vector3.right, 0.1f);
 
