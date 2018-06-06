@@ -8,7 +8,7 @@ public class PlatformerMovement : MonoBehaviour {
     float verticalSpeed;
     public float horizontalSpeed = 1;
     public float jumpForce = 1;
-    public float rayDetectionDistance;
+    public float rayDetectionDistance = 0.1f;
 
     Vector3 leftNode { get { return transform.position - new Vector3 (0.5f, 1, 0); } }
     Vector3 rightNode { get { return transform.position + new Vector3 (0.5f, -1, 0); } }
@@ -24,44 +24,47 @@ public class PlatformerMovement : MonoBehaviour {
 	void Start () {
         spriteRenderer = GetComponent<SpriteRenderer> ();
         rigidbody = GetComponent<Rigidbody2D> ();
-        if(!usesRigidbody) {
-            rigidbody.Sleep();
+        if (!usesRigidbody) {
+            rigidbody.Sleep ();
         }
 	}
 
-	private void Update(){
-        if (usesRigidbody){
-            RigidBodyUpdate();
-        }else{
-            TransformUpdate();
+    void Update () {
+        if (usesRigidbody) {
+            RigidBodyUpdate ();
+        } else {
+            TransformUpdate ();
         }
-	}
+    }
 
-    void RigidBodyUpdate(){
+    void RigidBodyUpdate () {
+        rigidbody.velocity = new Vector2 (0, rigidbody.velocity.y);
+        RaycastHit2D downLeft = Physics2D.Raycast (leftNode, Vector3.down, rayDetectionDistance);
+        RaycastHit2D downRight = Physics2D.Raycast (rightNode, Vector3.down, rayDetectionDistance);
 
-        rigidbody.velocity = new Vector2(0, rigidbody.velocity.y);
-        RaycastHit2D downLeft = Physics2D.Raycast(leftNode, Vector3.down, rayDetectionDistance);
-        RaycastHit2D downRight = Physics2D.Raycast(rightNode, Vector3.down, rayDetectionDistance);
-
-        float horizontalDirection = Input.GetAxis("Horizontal");
-
-        if (!isGrounded){
-            if (!downLeft && !downRight){
+        float horizontalDirection = Input.GetAxis ("Horizontal");
+        if (horizontalDirection < 0) {
+            if (!spriteRenderer.flipX) { spriteRenderer.flipX = true; }
+        } else if (horizontalDirection > 0) {
+            if (spriteRenderer.flipX) { spriteRenderer.flipX = false; }
+        }
+        if (isGrounded) {
+            if (!downLeft && !downRight) {
                 isGrounded = false;
-            }else if (Input.GetKeyDown(KeyCode.Space)){
+            } else if (Input.GetKeyDown (KeyCode.Space)) {
                 verticalSpeed = jumpForce;
-                rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                rigidbody.AddForce (Vector2.up * jumpForce, ForceMode2D.Impulse);
                 isGrounded = false;
             }
-        }else{
-            if (downLeft || downRight){
+        } else {
+            if (downLeft || downRight) {
                 isGrounded = true;
             }
         }
 
-        rigidbody.velocity = new Vector2(horizontalDirection * horizontalSpeed, rigidbody.velocity.y);
+        rigidbody.velocity = new Vector2 (horizontalDirection * horizontalSpeed, rigidbody.velocity.y);
     }
-	
+
 	// Update is called once per frame
 	void TransformUpdate () {
 
@@ -87,21 +90,20 @@ public class PlatformerMovement : MonoBehaviour {
                 horizontalDirection = 0;
             }
         }
-
         if (!isGrounded) {
             verticalSpeed -= gravity * Time.deltaTime;
-            if (verticalSpeed < 0){
+            if (verticalSpeed < 0) {
                 rayDetectionDistance = -verticalSpeed * Time.deltaTime;
-                CheckVerticalClamp(new RaycastHit2D[] { downLeft, downRight });
-            }else{
-                if (rayDetectionDistance != 0.1f){
+                CheckVerticalClamp (new RaycastHit2D[] { downLeft, downRight });
+            } else {
+                if (rayDetectionDistance != 0.1f) {
                     rayDetectionDistance = 0.1f;
                 }
             }
-        }else {
-            if(!downLeft && !downRight){
+        } else {
+            if (!downLeft && !downRight) {
                 isGrounded = false;
-            }else if (Input.GetKeyDown (KeyCode.Space)){
+            } else if (Input.GetKeyDown (KeyCode.Space)) {
                 verticalSpeed = jumpForce;
                 isGrounded = false;
             }
@@ -111,18 +113,14 @@ public class PlatformerMovement : MonoBehaviour {
 	}
 
     void CheckVerticalClamp (RaycastHit2D[] nodeRays) {
-        foreach (RaycastHit2D ray in nodeRays){
+        foreach (RaycastHit2D ray in nodeRays) {
             if (ray && rayDetectionDistance > ray.distance) {
-                if(ray.distance <= float.Epsilon){
-                    Debug.Log(ray.collider);
-                    float difference = leftNode.y - ray.collider.bounds.ClosestPoint(leftNode).y;
-                    transform.Translate(0, -difference, 0);
-                    Debug.Log("Went in RD: " + ray.distance + " and DIFF: " + -difference);
-                }else{
-                    Debug.Log("Clamped RD : " + ray.distance);
-                    transform.Translate(0, -ray.distance, 0);
+                if (ray.distance <= float.Epsilon){
+                    float difference = leftNode.y  - ray.collider.bounds.ClosestPoint (leftNode).y;
+                    transform.Translate (0, -difference, 0);
+                } else {
+                    transform.Translate (0, -ray.distance, 0);
                 }
-                Debug.Log(leftNode.y);
                 isGrounded = true;
                 verticalSpeed = 0;
                 break;
@@ -136,7 +134,7 @@ public class PlatformerMovement : MonoBehaviour {
             if (ray && verticalSpeed <= 0) {
                 float distance = ray.collider.transform.localScale.y * ray.collider.bounds.size.y / 2;
                 float difference = (leftNode.y - ray.collider.transform.position.y) - distance;
-                if (Mathf.Abs(difference) <= 0.15f) {
+                if (Mathf.Abs(difference) <= 0.5f) {
                     transform.Translate (0, -difference, 0);
                     isGrounded = true;
                     verticalSpeed = 0;
@@ -150,5 +148,7 @@ public class PlatformerMovement : MonoBehaviour {
     void OnDrawGizmos () {
         Gizmos.DrawSphere (leftNode, 0.2f);
         Gizmos.DrawSphere (rightNode, 0.2f);
+        Gizmos.color = Color.white;
+        Gizmos.DrawRay (leftNode, Vector3.down * rayDetectionDistance);
     }
 }
